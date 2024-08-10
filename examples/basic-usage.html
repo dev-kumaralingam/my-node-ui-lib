@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Node UI Library Example</title>
+  <script type="module" src="../src/index.js"></script>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+    }
+    node-ui {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <node-ui></node-ui>
+
+  <script>
+    
+    const nodeUi = document.querySelector('node-ui');
+
+    nodeUi.addEventListener('node-added', (e) => {
+      console.log('Node added:', e.detail);
+    });
+
+    nodeUi.addEventListener('edge-added', (e) => {
+      console.log('Edge added:', e.detail);
+    });
+
+    nodeUi.addEventListener('node-moved', (e) => {
+      console.log('Node moved:', e.detail);
+    });
+
+    nodeUi.addEventListener('node-text-changed', (e) => {
+      console.log('Node text changed:', e.detail);
+    });
+  </script>
+</body>
+</html>
