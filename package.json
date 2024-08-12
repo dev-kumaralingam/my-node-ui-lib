@@ -1,15 +1,15 @@
 {
   "name": "my-node-ui-lib",
   "version": "1.0.0",
-  "description": "A custom UI library built with Lit",
-  "main": "index.js",
+  "description": "A custom UI library built with Lit for node-based UIs.",
+  "main": "src/index.js",
+  "type": "module",
   "scripts": {
     "start": "snowpack dev",
-    "build": "snowpack build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "snowpack build"
   },
   "keywords": ["lit", "ui-library", "web-components"],
-  "author": "Kumaralingam S",
+  "author": "Your Name",
   "license": "ISC",
   "dependencies": {
     "lit": "^3.2.0"
