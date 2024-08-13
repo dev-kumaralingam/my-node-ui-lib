@@ -4,21 +4,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Node UI Library</title>
+    <!-- <script type="module" src="../src/index.js"></script> -->
     <script type="module" src="/dist/index.js"></script>
+
     <style>
         body, html {
             margin: 0;
             padding: 0;
             width: 100%;
             height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        #controls {
+            padding: 10px;
+            background-color: #f8f8f8;
+            border-bottom: 1px solid #ccc;
+            display: flex;
+            gap: 10px;
         }
         node-ui {
-            width: 100%;
-            height: 100%;
+            flex: 1;
         }
     </style>
 </head>
 <body>
+    <div id="controls">
+        <button id="createNodeBtn">Create Node</button>
+        <button id="deleteNodeBtn">Delete Node</button>
+    </div>
     <node-ui></node-ui>
+    
+    <script>
+        const nodeUI = document.querySelector('node-ui');
+
+        // Ensure the nodes array is properly initialized before adding nodes
+        nodeUI.nodes = nodeUI.nodes || [];
+        nodeUI.edges = nodeUI.edges || [];
+
+        document.getElementById('createNodeBtn').addEventListener('click', () => {
+            const newNode = {
+                id: Date.now(),
+                x: Math.random() * 500, // Random x position
+                y: Math.random() * 500, // Random y position
+                text: 'New Node'
+            };
+            nodeUI.nodes = [...nodeUI.nodes, newNode];
+        });
+
+        document.getElementById('deleteNodeBtn').addEventListener('click', () => {
+            if (nodeUI.nodes.length > 0) {
+                const lastNode = nodeUI.nodes[nodeUI.nodes.length - 1];
+                nodeUI.nodes = nodeUI.nodes.filter(node => node.id !== lastNode.id);
+                nodeUI.edges = nodeUI.edges.filter(edge => edge.startId !== lastNode.id && edge.endId !== lastNode.id);
+            }
+        });
+    </script>
 </body>
 </html>

@@ -12,6 +12,7 @@ export class NodeUI extends LitElement {
 
   constructor() {
     super();
+    // Ensure nodes and edges are always arrays
     this.nodes = [];
     this.edges = [];
   }
@@ -31,7 +32,6 @@ export class NodeUI extends LitElement {
         .edges=${this.edges}
         @node-added=${this.handleNodeAdded}
         @node-drag-start=${this.handleNodeDragStart}
-        @node-deleted=${this.handleNodeDeleted}
         @text-changed=${this.handleTextChanged}
       ></canvas-component>
     `;
@@ -49,33 +49,27 @@ export class NodeUI extends LitElement {
 
   handleNodeDragStart(e) {
     const { id, x: startX, y: startY } = e.detail;
-
+    
     const handleMouseMove = (moveEvent) => {
       const dx = moveEvent.clientX - startX;
       const dy = moveEvent.clientY - startY;
-      this.nodes = this.nodes.map(node =>
+      this.nodes = this.nodes.map(node => 
         node.id === id ? { ...node, x: node.x + dx, y: node.y + dy } : node
       );
     };
-
+    
     const handleMouseUp = () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseup', handleMouseUp);
     };
-
+    
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('mouseup', handleMouseUp);
   }
 
-  handleNodeDeleted(e) {
-    const { id } = e.detail;
-    this.nodes = this.nodes.filter(node => node.id !== id);
-    this.edges = this.edges.filter(edge => edge.startId !== id && edge.endId !== id);
-  }
-
   handleTextChanged(e) {
     const { id, text } = e.detail;
-    this.nodes = this.nodes.map(node =>
+    this.nodes = this.nodes.map(node => 
       node.id === id ? { ...node, text } : node
     );
   }
